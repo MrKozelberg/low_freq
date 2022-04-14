@@ -1,7 +1,10 @@
 % document type
 \documentclass[12pt]{article}
 \RequirePackage{pdf14}
-\usepackage[total={170mm,230mm}]{geometry}
+\usepackage[a4paper, includefoot,
+            left=3cm, right=1cm,
+            top=1.5cm, bottom=1.5cm,
+            headsep=1cm, footskip=1cm]{geometry}
 %Russian-specific packages
 %--------------------------------------
 \usepackage[T2A]{fontenc}
@@ -137,8 +140,40 @@
 
 	\subsection{Расчёт параметра G}
 
-	
+	Расчёт параметра $G$ проводился для каждого из экспериментальных значений параметра накачки $A$. Связь параметра накачки $A$ и параметра $G$ с измеренными значениями мощности накачки $P_\text{нак}$ и релаксационной частоты $f_\text{рел}$ даётся выражениями
+	\begin{equation}
+		A = \dfrac{P_\text{нак}}{P_\text{пор}},\quad \Omega = 2\pi f_\text{рел} T_1,\quad \Omega^2 = G\left( A - 1\right),
+	\end{equation}
+	где $T_1 = 0.23\,\text{мс}$ --- время релаксации насыщения. 
 
+	\begin{figure}[tb]
+		\centering
+		\includegraphics[width=\textwidth]{../figures/g_vs_a.png}
+		\caption{Зависимость параметра $G$ от параметра накачки.}
+		\label{fig:g_vs_a}
+	\end{figure}
+
+	Конечная формула для $G$ и погрешности $\Delta G$
+	\begin{equation}
+	\begin{split}
+		&G = \dfrac{\qty( 2\pi f_\text{рел} T_1 )^2}{A-1}, \quad \Delta_\text{изм}G = \dfrac{2(2 \pi T_1)^2 \, f_\text{рел}\, \Delta_\text{изм} f_\text{рел}}{A-1} + \dfrac{\qty( 2\pi f_\text{рел} T_1 )^2}{\qty(A-1)^2}\Delta_\text{изм} A,\\
+		&\Delta_\text{изм} A = \dfrac{\Delta_\text{изм} P_\text{нак}}{P_\text{пор}} + P_\text{нак} \dfrac{\Delta_\text{изм} P_\text{пор}}{P_\text{пор}^2},
+	\end{split}
+	\end{equation}
+	где $\Delta_\text{изм} f_\text{рел} = 10\,\text{кГц}$ --- измерительная погрешность измерения релаксационной частоты. % можно взять поменьше, наверно, но величина погрешности G всё равно будет оргомна
+
+	На \figref{fig:g_vs_a} представлена зависимость параметра $G$ от параметра накачки $A$. Среднее значение $\langle G \rangle = 1.07\times10^{6}$. Найдём погрешность для параметра $G$
+	\begin{equation}
+		\Delta G = \sqrt{\Delta_\text{изм} G + \Delta_\text{случ}G},
+	\end{equation}
+	где случайная погрешность считается как стандартная ошибка среднего. Тогда можно записать для среднего значения параметра $G$
+	\begin{equation}
+		\langle G \rangle = \qty(1.07\pm0.35)\times10^{6}.
+	\end{equation}
+
+	\section{Графики зависимости мощности излучения и релаксационной частоты от параметра накачки}
+
+	
 
 
 \end{document}
