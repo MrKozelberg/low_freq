@@ -1,6 +1,6 @@
 % document type
 \documentclass[12pt]{article}
-\RequirePackage{pdf14}
+
 \usepackage[a4paper, includefoot,
             left=3cm, right=1cm,
             top=1.5cm, bottom=1.5cm,
@@ -15,16 +15,24 @@
 %Hyphenation rules
 %--------------------------------------
 \usepackage{hyphenat}
+\usepackage{tempora}
 
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{amsthm}
+% в преамбуле
+\usepackage{subcaption}
+
 \usepackage{physics}
-
+\usepackage{tikz}
 \usepackage{hyperref}
+\usepackage{graphicx} % для вставки картинок
+\usepackage{amssymb,amsfonts,amsmath,amsthm} % математические дополнения от АМС
+\usepackage{indentfirst}
+\usepackage{nicefrac,xfrac}
+\usepackage{subcaption}
+
 \usepackage{cmap}
+
+\linespread{1.3} % полуторный интервал
+\frenchspacing
 
 \newcommand*{\figref}[2][]{\hyperref[#2]{Рис.~\ref*{#2}#1}}
 \newcommand*{\tabref}[2][]{\hyperref[#2]{Табл.~\ref*{#2}#1}}
@@ -133,7 +141,7 @@
 
 	\begin{figure}[tb]
 		\centering
-		\includegraphics[width=\textwidth]{../figures/p_iz_vs_p_nak.png}
+		\includegraphics[width=.49\textwidth]{../figures/p_iz_vs_p_nak.png}
 		\caption{Зависимость мощности излучения от мощности накачки. Фоновая засветка учтена и вычтена из мощности излучения.}
 		\label{fig:p_iz_vs_p_nak}
 	\end{figure}
@@ -148,7 +156,7 @@
 
 	\begin{figure}[tb]
 		\centering
-		\includegraphics[width=\textwidth]{../figures/g_vs_a.png}
+		\includegraphics[width=.49\textwidth]{../figures/g_vs_a.png}
 		\caption{Зависимость параметра $G$ от параметра накачки.}
 		\label{fig:g_vs_a}
 	\end{figure}
@@ -164,16 +172,49 @@
 
 	На \figref{fig:g_vs_a} представлена зависимость параметра $G$ от параметра накачки $A$. Среднее значение $\langle G \rangle = 1.07\times10^{6}$. Найдём погрешность для параметра $G$
 	\begin{equation}
-		\Delta G = \sqrt{\Delta_\text{изм} G + \Delta_\text{случ}G},
+		\Delta G = \sqrt{\qty(\Delta_\text{изм} G)^2 + \qty(\Delta_\text{случ}G)^2},
 	\end{equation}
-	где случайная погрешность считается как стандартная ошибка среднего. Тогда можно записать для среднего значения параметра $G$
+	где случайная погрешность считается как стандартное отклонение. Тогда можно записать для среднего значения параметра $G$
 	\begin{equation}
 		\langle G \rangle = \qty(1.07\pm0.35)\times10^{6}.
 	\end{equation}
 
-	\section{Графики зависимости мощности излучения и релаксационной частоты от параметра накачки}
+	\subsection{Графики зависимости мощности излучения и релаксационной частоты от параметра накачки}
+
+	На \figref{fig:p_iz_vs_A} представлена зависимость мощности излучения $P_\text{изл}$ от параметра накачки $A$. Линейный тренд находился в виде $p\cdot(A - 1)$, где $p$ --- параметр, то есть линейный тренд проходит при $A=1$ через 0.
 
 	
 
+	На \figref{fig:Omega_vs_A} представлена зависимость мощности излучения $P_\text{изл}$ от параметра накачки $A$. Экспериментальные данные сопоставляются с результатами теоретическими, которые были построены по формуле $\Omega=\sqrt{\langle G \rangle (A-1)}$. Ошибки вычисления среднего значения $\langle G \rangle$ учтены синей областью на графике. Видно, что с учётом ошибок определения среднего значения $\langle G \rangle$ экспериментальные данные сходятся с теоретическими результатами.
+
+	% в теле документа
+	\begin{figure} 
+    	\centering
+    	\begin{subfigure}[t]{0.49\textwidth}
+        	\centering
+			\includegraphics[width=\textwidth]{../figures/p_iz_vs_A.png}
+			\caption{}
+			\label{fig:p_iz_vs_A}
+    	\end{subfigure}
+    	\hfill
+    	\begin{subfigure}[t]{0.49\textwidth}
+        	\centering
+			\includegraphics[width=\textwidth]{../figures/Omega_vs_A.png}
+			\caption{}
+			\label{fig:Omega_vs_A}
+     	\end{subfigure}
+     	\caption{(a) Зависимость мощности излучения $P_\text{изл}$ от параметра накачки $A$. (b) Зависимость частоты релаксационных колебаний $\Omega$ от параметра накачки $A$. Теоретическая кривая построена для среднего значения $\langle G \rangle$. Синяя область около теоретической кривой учитывает ошибку вычисления среднего значения $\langle G \rangle$.}
+	\end{figure}
+
+	\subsection{Оценка полосы резонатора лазера}
+
+	Оценим по среднему значению $\langle G \rangle$ полосу резонатора лазера $\delta f_\text{эксп} = 1/(2\pi T_\text{с})$. По определению $G = T_1 / T_\text{с}$, тогда для $\delta f_\text{эксп}$ получаем выражение
+	\begin{equation}
+		\delta f_\text{эксп} = \frac{\langle G \rangle}{2\pi T_1}.
+	\end{equation}
+	Подставляем числа и с учетом погрешности получаем $\delta f_\text{эксп} = (7.44\pm2.43)\times10^8\,\text{Гц}$.
+
+	\subsection{Сравнение оценочной величины полосы резонатора с теоретической}
+	Теоретическое значение $$\delta f_\text{теор} = -\frac{c \ln{\sqrt{R_1 R_2}}}{2\pi L} \approx - 3\times10^8 \ln{\sqrt{1\times 0.98}}\; /\;(6.28 \times 0.01) = 4.83\times10^8\,\text{Гц}$$. Взяли $L=1\,\text{мм}$. Теоретическое значение не совпадает в оценочной величиной даже с учётом погрешности. Стоит отметить, что если взять один из коэффициентов отражения хоть на одну сотую поменьше, то теоретическое значение будет совпадать с оценочным.
 
 \end{document}
